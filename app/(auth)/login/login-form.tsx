@@ -1,13 +1,5 @@
 'use client';
 
-// Removed unused imports 
-// Note: We need to ensure lib/actions exists or create it, 
-// OR simpler for this demo: use a client-side fetch or just standard next-auth integration.
-// Given previous auth setup was using `signIn` from `next-auth/react` (implied or needed).
-// Let's implement a standard client-side form using server actions or just direct form submission.
-// Phase 3 implemented auth but I didn't see explicit server actions. 
-// I will implement a robust client-side form that calls a server action or API.
-// Actually, for simplicity with 'credentials', let's use `signIn` from `next-auth/react`.
 
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
@@ -20,7 +12,6 @@ import { useRouter } from 'next/navigation';
 export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
