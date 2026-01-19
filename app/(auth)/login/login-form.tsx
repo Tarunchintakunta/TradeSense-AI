@@ -1,6 +1,5 @@
 'use client';
 
-
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -32,8 +31,7 @@ export default function LoginForm() {
         } else {
             router.push('/dashboard');
         }
-    } catch (error) {
-        console.error(error);
+    } catch {
         setLoading(false);
     }
   };
