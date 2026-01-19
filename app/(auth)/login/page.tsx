@@ -1,68 +1,47 @@
-'use client';
-
-import { useActionState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { signIn } from 'next-auth/react';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import LoginForm from './login-form';
+import { BarChart3 } from 'lucide-react';
 
 export default function LoginPage() {
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
-
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setLoading(true);
-    
-    const formData = new FormData(event.currentTarget);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-
-    const result = await signIn('credentials', {
-      email,
-      password,
-      redirect: false,
-    });
-
-    if (result?.error) {
-      alert('Invalid credentials');
-      setLoading(false);
-    } else {
-      router.push('/');
-      router.refresh();
-    }
-  }
-
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background">
-      <Card className="w-[350px]">
-        <CardHeader>
-          <CardTitle>TradeSense AI</CardTitle>
-          <CardDescription>Enter any email to start (Demo Mode)</CardDescription>
-        </CardHeader>
-        <form onSubmit={handleSubmit}>
-          <CardContent>
-            <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" name="email" placeholder="demo@tradesense.ai" required type="email" />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="password">Password</Label>
-                <Input id="password" name="password" placeholder="Any password works" required type="password" />
-              </div>
+    <main className="flex min-h-screen flex-col items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-background to-background p-6">
+      <div className="absolute top-8 left-8 flex items-center gap-2 font-bold text-xl">
+          <div className="h-8 w-8 rounded-lg bg-primary/20 flex items-center justify-center">
+             <BarChart3 className="h-5 w-5 text-primary" />
+          </div>
+          <span>TradeSense AI</span>
+      </div>
+
+      <div className="w-full max-w-sm space-y-4">
+        <div className="flex flex-col space-y-2 text-center">
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Welcome Back
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            Enter your credentials to access the dashboard.
+          </p>
+        </div>
+        
+        {/* Seed Data Card for Judges */}
+        <div className="p-4 rounded-lg border bg-emerald-500/10 border-emerald-500/20 text-emerald-500 text-sm space-y-2">
+            <p className="font-semibold text-xs uppercase tracking-wider opacity-70">Hackathon Judge Access</p>
+            <div className="flex justify-between">
+                <span className="opacity-70">Email:</span>
+                <span className="font-mono bg-background/50 px-2 rounded select-all">judge@tradesense.ai</span>
             </div>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button className="w-full" type="submit" disabled={loading}>
-              {loading ? 'Signing in...' : 'Enter Dashboard'}
-            </Button>
-          </CardFooter>
-        </form>
-      </Card>
-    </div>
+            <div className="flex justify-between">
+                <span className="opacity-70">Password:</span>
+                <span className="font-mono bg-background/50 px-2 rounded select-all">password</span>
+            </div>
+        </div>
+
+        <div className="p-8 rounded-xl border bg-card/50 backdrop-blur-md shadow-2xl">
+             <LoginForm />
+        </div>
+        
+        <p className="px-8 text-center text-sm text-muted-foreground">
+            Don't have an account? No problem, use the judge credentials above.
+        </p>
+      </div>
+    </main>
   );
 }
